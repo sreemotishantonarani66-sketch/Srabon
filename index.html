@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SRABON VIP MOD</title>
+    <style>
+        /* RGB লাইটিং বর্ডার অ্যানিমেশন */
+        @keyframes rgb-lighting {
+            0% { border-color: #ff0000; box-shadow: 0 0 15px #ff0000; }
+            25% { border-color: #00ff00; box-shadow: 0 0 15px #00ff00; }
+            50% { border-color: #0000ff; box-shadow: 0 0 15px #0000ff; }
+            75% { border-color: #ffff00; box-shadow: 0 0 15px #ffff00; }
+            100% { border-color: #ff00ff; box-shadow: 0 0 15px #ff00ff; }
+        }
+
+        #floating-hack {
+            position: fixed; top: 50px; left: 20px; width: 170px;
+            background: rgba(10, 10, 10, 0.95); 
+            border: 3px solid #ff0000; /* অ্যানিমেটেড বর্ডার */
+            border-radius: 12px;
+            animation: rgb-lighting 3s linear infinite; /* লাইটিং এফেক্ট */
+            z-index: 2147483647 !important; padding: 10px; text-align: center;
+            cursor: move; touch-action: none; font-family: sans-serif;
+        }
+
+        .mod-title { color: #fff; font-size: 13px; font-weight: bold; margin-bottom: 10px; text-transform: uppercase; text-shadow: 0 0 5px #fff; }
+        input { width: 88%; padding: 8px; margin-bottom: 8px; border-radius: 6px; border: 1px solid #333; background: #000; color: #00ff00; font-size: 11px; outline: none; }
+        .btn { width: 100%; padding: 9px; background: #00ffcc; border: none; color: #000; font-weight: bold; border-radius: 6px; cursor: pointer; font-size: 11px; }
+        #hack-result { display: none; margin-top: 10px; }
+        #res-text { font-size: 32px; font-weight: 900; margin: 5px 0; animation: pulse 1s infinite; }
+        @keyframes pulse { 0% { opacity: 1; } 50% { opacity: 0.5; } 100% { opacity: 1; } }
+        #timer { color: #fff; font-size: 18px; font-weight: bold; }
+        .hide { display: none; }
+        .admin-box { background: #1a1a1a; padding: 8px; border-radius: 8px; margin-top: 10px; border-top: 1px solid #333; }
+    </style>
+</head>
+<body>
+
+<iframe src="https://dkwin9.com/#/register?invitationCode=75845106239" 
+        style="position:fixed; top:0; left:0; width:100%; height:100%; border:none; z-index:1;"></iframe>
+
+<div id="floating-hack">
+    <div class="mod-title" id="hack-name">SRABON VIP MOD</div>
+    
+    <div id="step-tg">
+        <button class="btn" style="background:#0088cc; color:white;" onclick="joinTG()">JOIN TELEGRAM</button>
+    </div>
+
+    <div id="step-login" class="hide">
+        <input type="password" id="pass-input" placeholder="Password">
+        <button class="btn" onclick="unlock()">UNLOCK</button>
+    </div>
+
+    <div id="hack-result">
+        <div id="timer">00s</div>
+        <div id="res-text">READY</div>
+        <div onclick="adminTrigger()" style="height:20px; cursor:pointer; margin-top:5px; border-top:1px dashed #444;"></div>
+        
+        <div id="admin-panel" class="hide admin-box">
+            <input type="text" id="new-name" placeholder="Change Name">
+            <input type="text" id="new-h-p" placeholder="New Hack Pass">
+            <input type="text" id="new-a-p" placeholder="New Admin Pass">
+            <button class="btn" onclick="saveAll()">SAVE ALL</button>
+        </div>
+    </div>
+</div>
+
+<script>
+    const tgLink = "https://t.me/bdtgamowner90";
+    let hP = localStorage.getItem("h_p") || "1111";
+    let aP = localStorage.getItem("a_p") || "2222";
+    let hN = localStorage.getItem("h_n") || "SRABON VIP MOD";
+
+    function joinTG() {
+        window.open(tgLink, "_blank");
+        localStorage.setItem("tg_ok_forever", "true"); // একবার জয়েন করলে এটি সেভ হয়ে থাকবে
+        checkState();
+    }
+
+    function checkState() {
+        if (localStorage.getItem("tg_ok_forever") === "true") {
+            document.getElementById("step-tg").classList.add("hide");
+            document.getElementById("step-login").classList.remove("hide");
+        }
+    }
+
+    function unlock() {
+        if (document.getElementById("pass-input").value === hP) {
+            document.getElementById("step-login").classList.add("hide");
+            document.getElementById("hack-result").style.display = "block";
+            startLogic();
+        } else { alert("Wrong Password!"); }
+    }
+
+    function adminTrigger() {
+        if (prompt("Admin Key:") === aP) {
+            document.getElementById("admin-panel").classList.toggle("hide");
+        }
+    }
+
+    function saveAll() {
+        let nN = document.getElementById("new-name").value;
+        let nH = document.getElementById("new-h-p").value;
+        let nA = document.getElementById("new-a-p").value;
+        if(nN) localStorage.setItem("h_n", nN);
+        if(nH) localStorage.setItem("h_p", nH);
+        if(nA) localStorage.setItem("a_p", nA);
+        alert("Saved!");
+        location.reload();
+    }
+
+    function startLogic() {
+        setInterval(() => {
+            const now = new Date();
+            const sec = now.getUTCSeconds();
+            document.getElementById("timer").innerText = (30 - (sec % 30)) + "s";
+            let logic = (Math.floor(Date.now() / 30000) * 3 + 7) % 10;
+            const res = document.getElementById("res-text");
+            if ([0, 1, 3, 5, 6, 7].includes(logic)) {
+                res.innerText = "BIG"; res.style.color = "#ff3333";
+            } else {
+                res.innerText = "SMALL"; res.style.color = "#00ff44";
+            }
+        }, 1000);
+    }
+
+    const box = document.getElementById("floating-hack");
+    let active = false, xOff = 0, yOff = 0, iX, iY;
+    box.addEventListener("touchstart", (e) => {
+        iX = e.touches[0].clientX - xOff; iY = e.touches[0].clientY - yOff;
+        if (e.target.tagName !== "INPUT") active = true;
+    });
+    box.addEventListener("touchmove", (e) => {
+        if (active) {
+            e.preventDefault();
+            xOff = e.touches[0].clientX - iX; yOff = e.touches[0].clientY - iY;
+            box.style.transform = `translate3d(${xOff}px, ${yOff}px, 0)`;
+        }
+    });
+    box.addEventListener("touchend", () => active = false);
+
+    window.onload = () => {
+        document.getElementById("hack-name").innerText = hN;
+        checkState();
+    };
+</script>
+</body>
+</html>
